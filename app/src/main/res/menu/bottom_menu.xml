@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mainMap"
+        android:enabled="true"
+        android:icon="@drawable/baseline_map_24"
+        android:title="@string/map_title" />
+    <item
+        android:id="@+id/objectList"
+        android:enabled="true"
+        android:icon="@drawable/baseline_list_24"
+        android:title="@string/objects_title" />
+    <item
+        android:id="@+id/settings"
+        android:enabled="true"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="@string/settings_title" />
+</menu>
