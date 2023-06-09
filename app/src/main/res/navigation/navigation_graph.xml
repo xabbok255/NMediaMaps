@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/mapsFragmentNav">
+    app:startDestination="@id/mainMap">
 
     <fragment
-        android:id="@+id/mapsFragmentNav"
+        android:id="@+id/mainMap"
         android:name="com.xabbok.nmediamaps.MapsFragment"
         android:label="MapsFragment"
-        tools:layout="@layout/fragment_maps"/>
+        tools:layout="@layout/fragment_maps" />
     <fragment
-        android:id="@+id/objectsFragmentNav"
+        android:id="@+id/objectList"
         android:name="com.xabbok.nmediamaps.ObjectsFragment"
         android:label="fragment_objects"
         tools:layout="@layout/fragment_objects" />
     <action
         android:id="@+id/action_global_objectsFragmentNav"
-        app:destination="@id/objectsFragmentNav"
-        app:popUpTo="@id/mapsFragmentNav" />
+        app:destination="@id/objectList"
+        app:popUpTo="@id/mainMap" />
     <action
         android:id="@+id/action_global_mapsFragmentNav"
-        app:destination="@id/mapsFragmentNav"
+        app:destination="@id/mainMap"
         app:popUpTo="@id/navigation_graph"
-        app:popUpToInclusive="true"/>
+        app:popUpToInclusive="true" />
 </navigation>
