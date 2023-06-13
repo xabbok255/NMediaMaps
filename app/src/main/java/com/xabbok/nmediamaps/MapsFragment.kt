@@ -26,8 +26,10 @@ import com.google.maps.android.ktx.model.cameraPosition
 import com.google.maps.android.ktx.utils.collection.addMarker
 import com.xabbok.nmediamaps.databinding.FragmentMapsBinding
 import com.xabbok.nmediamaps.extensions.icon
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MapsFragment : Fragment(R.layout.fragment_maps) {
     private lateinit var googleMap: GoogleMap
     private val marketManager: MarkerManager by lazy { MarkerManager(googleMap) }
@@ -99,7 +101,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                         }
                     )
                 )
-                
+
                 val collection: MarkerManager.Collection = marketManager.newCollection().apply {
                     addMarker {
                         position(target)
