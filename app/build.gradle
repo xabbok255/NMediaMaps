@@ -55,6 +55,12 @@ android {
     }
 }
 
+afterEvaluate {
+    if (gradle.startParameter.taskNames.contains(":app:assembleDebug") && gradle.startParameter.taskNames.contains(":app:clean")) {
+        tasks.assembleDebug.finalizedBy(tasks.lint)
+    }
+}
+
 dependencies {
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
 

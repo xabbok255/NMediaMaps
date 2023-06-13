@@ -20,6 +20,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onStart() {
         super.onStart()
 
+        /*navHostController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.mainMap -> {
+                    binding.bottomNav.visibility = View.VISIBLE
+                }
+                R.id.objectList -> {
+                    binding.bottomNav.visibility = View.GONE
+                }
+            }
+        }*/
+
         binding.bottomNav.setupWithNavController(navHostController)
     }
 }
