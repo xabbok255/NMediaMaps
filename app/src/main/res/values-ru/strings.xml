@@ -4,4 +4,8 @@
     <string name="map_title">Карта</string>
     <string name="objects_title">Объекты</string>
     <string name="settings_title">Настройки</string>
+    <string name="title_label">Название</string>
+    <string name="description_label">Описание</string>
+    <string name="save_button_text">Сохранить</string>
+    <string name="cancel_button_text">Отмена</string>
 </resources>
