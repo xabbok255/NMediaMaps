@@ -1,4 +1,4 @@
-package com.xabbok.nmediamaps
+package com.xabbok.nmediamaps.presentation.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -24,6 +24,7 @@ import com.google.maps.android.ktx.awaitAnimateCamera
 import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.model.cameraPosition
 import com.google.maps.android.ktx.utils.collection.addMarker
+import com.xabbok.nmediamaps.R
 import com.xabbok.nmediamaps.databinding.FragmentMapsBinding
 import com.xabbok.nmediamaps.extensions.icon
 import dagger.hilt.android.AndroidEntryPoint

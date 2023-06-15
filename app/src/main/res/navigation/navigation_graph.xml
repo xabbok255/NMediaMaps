@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/mainMap"
-        android:name="com.xabbok.nmediamaps.MapsFragment"
+        android:name="com.xabbok.nmediamaps.presentation.fragments.MapsFragment"
         android:label="MapsFragment"
         tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/objectList"
-        android:name="com.xabbok.nmediamaps.ObjectsFragment"
+        android:name="com.xabbok.nmediamaps.presentation.fragments.ObjectsFragment"
         android:label="fragment_objects"
         tools:layout="@layout/fragment_objects" />
     <action
@@ -24,4 +24,9 @@
         app:destination="@id/mainMap"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/objectEditFragment"
+        android:name="com.xabbok.nmediamaps.presentation.fragments.ObjectEditFragment"
+        android:label="ObjectEditFragment" />
+    <action android:id="@+id/action_global_objectEditFragment" app:destination="@id/objectEditFragment" />
 </navigation>

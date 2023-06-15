@@ -1,9 +1,11 @@
-package com.xabbok.nmediamaps
+package com.xabbok.nmediamaps.presentation
 
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.xabbok.nmediamaps.R
 import com.xabbok.nmediamaps.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,16 +22,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onStart() {
         super.onStart()
 
-        /*navHostController.addOnDestinationChangedListener { _, destination, _ ->
+        navHostController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.mainMap -> {
-                    binding.bottomNav.visibility = View.VISIBLE
-                }
-                R.id.objectList -> {
+                R.id.objectEditFragment -> {
                     binding.bottomNav.visibility = View.GONE
                 }
+
+                else -> binding.bottomNav.visibility = View.VISIBLE
+
             }
-        }*/
+        }
 
         binding.bottomNav.setupWithNavController(navHostController)
     }

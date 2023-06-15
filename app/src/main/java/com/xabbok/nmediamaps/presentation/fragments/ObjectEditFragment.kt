@@ -1,4 +1,4 @@
-package com.xabbok.nmediamaps
+package com.xabbok.nmediamaps.presentation.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.xabbok.nmediamaps.R
 import com.xabbok.nmediamaps.databinding.FragmentObjectEditBinding
 import com.xabbok.nmediamaps.presentation.viewmodels.ObjectsViewModel
 
@@ -32,6 +33,7 @@ class ObjectEditFragment : Fragment(R.layout.fragment_object_edit) {
         binding.submitButton.setOnClickListener {
             binding.data?.let {
                 viewModel.save(it)
+                findNavController().navigateUp()
             }
         }
 

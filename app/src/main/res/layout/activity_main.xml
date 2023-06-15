@@ -14,7 +14,7 @@
         android:layout_weight="1"
         app:navGraph="@navigation/navigation_graph"
         app:defaultNavHost="true"
-        tools:context=".MainActivity"
+        tools:context=".presentation.MainActivity"
         tools:layout="@layout/fragment_maps" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

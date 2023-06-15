@@ -1,4 +1,4 @@
-package com.xabbok.nmediamaps
+package com.xabbok.nmediamaps.application
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
