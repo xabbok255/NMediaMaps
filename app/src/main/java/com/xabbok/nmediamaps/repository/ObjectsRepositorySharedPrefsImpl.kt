@@ -35,6 +35,7 @@ class ObjectsRepositorySharedPrefsImpl @Inject constructor(
 
     override fun delete(id: String) {
         sharedPreferences.edit().remove(id).apply()
+        loadData()
     }
 
     override fun getById(id: String): GeoObject? {
