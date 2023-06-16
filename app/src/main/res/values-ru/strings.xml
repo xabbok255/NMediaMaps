@@ -9,4 +9,5 @@
     <string name="save_button_text">Сохранить</string>
     <string name="cancel_button_text">Отмена</string>
     <string name="last_touched_point_button_text">Добавить объект</string>
+    <string name="delete_button_text">Удалить</string>
 </resources>
