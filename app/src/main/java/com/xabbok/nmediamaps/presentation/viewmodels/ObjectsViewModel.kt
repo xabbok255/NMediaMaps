@@ -1,9 +1,12 @@
 package com.xabbok.nmediamaps.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.maps.model.LatLng
 import com.xabbok.nmediamaps.dto.GeoObject
 import com.xabbok.nmediamaps.repository.ObjectsRepository
+import com.xabbok.nmediamaps.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -11,6 +14,8 @@ import javax.inject.Inject
 class ObjectsViewModel @Inject constructor(private val repository: ObjectsRepository) :
     ViewModel() {
     val data: LiveData<List<GeoObject>> = repository.data
+    val lastTouchedPoint: MutableLiveData<LatLng> = MutableLiveData()
+    val firstMoveCameraCurrentPosition = SingleLiveEvent<Boolean>()
 
     init {
         repository.save(
