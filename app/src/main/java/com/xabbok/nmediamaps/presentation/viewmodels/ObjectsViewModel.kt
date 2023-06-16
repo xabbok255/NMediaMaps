@@ -21,10 +21,20 @@ class ObjectsViewModel @Inject constructor(private val repository: ObjectsReposi
         repository.save(
             GeoObject(
                 title = "Заголовок 1",
-                description = "описание",
+                description = "описание\n1\n2\n3\n4\n5\n6\n7\n8",
                 lat = 45.0,
                 long = 37.3,
                 id = "0000000000000000"
+            )
+        )
+
+        repository.save(
+            GeoObject(
+                title = "Заголовок 2",
+                description = "описание2\n1\n2\n3\n4\n5\n6\n7\n8",
+                lat = 45.0,
+                long = 37.3,
+                id = "0000000000000005"
             )
         )
 
