@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GeoObject(
-    val id: String? = null,
+    val id: Int = 0,
     var title: String,
     var description: String = "",
     val lat: Double,

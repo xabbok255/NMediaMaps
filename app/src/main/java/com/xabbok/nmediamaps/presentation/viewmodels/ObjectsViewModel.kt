@@ -24,7 +24,7 @@ class ObjectsViewModel @Inject constructor(private val repository: ObjectsReposi
                 description = "описание\n1\n2\n3\n4\n5\n6\n7\n8",
                 lat = 45.0,
                 long = 37.3,
-                id = "0000000000000000"
+                id = 1
             )
         )
 
@@ -34,7 +34,7 @@ class ObjectsViewModel @Inject constructor(private val repository: ObjectsReposi
                 description = "описание2\n1\n2\n3\n4\n5\n6\n7\n8",
                 lat = 45.0,
                 long = 37.3,
-                id = "0000000000000005"
+                id = 2
             )
         )
 
@@ -49,7 +49,7 @@ class ObjectsViewModel @Inject constructor(private val repository: ObjectsReposi
         repository.save(value)
     }
 
-    fun delete(id: String) {
+    fun delete(id: Int) {
         repository.delete(id)
     }
 }

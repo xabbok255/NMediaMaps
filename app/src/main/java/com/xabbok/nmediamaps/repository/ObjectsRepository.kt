@@ -5,8 +5,8 @@ import com.xabbok.nmediamaps.dto.GeoObject
 
 interface ObjectsRepository {
     fun save(value: GeoObject)
-    fun delete(id: String)
-    fun getById(id: String) : GeoObject?
+    fun delete(id: Int)
+    fun getById(id: Int) : GeoObject?
 
     fun loadData()
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.xabbok.nmediamaps.dto.GeoObject
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.util.UUID
 import javax.inject.Inject
 
 class ObjectsRepositorySharedPrefsImpl @Inject constructor(
@@ -27,19 +26,26 @@ class ObjectsRepositorySharedPrefsImpl @Inject constructor(
     private val gson = Gson()
 
     override fun save(value: GeoObject) {
-        val newValue = value.copy(id = value.id ?: UUID.randomUUID().toString())
+
+        val newValue =
+            value.copy(
+                id = if (value.id != 0)
+                    value.id
+                else
+                    _data.value?.maxByOrNull { it.id }?.id?.plus(1) ?: 1
+            )
         val json = gson.toJson(newValue)
         sharedPreferences.edit().putString(newValue.id.toString(), json).apply()
         loadData()
     }
 
-    override fun delete(id: String) {
-        sharedPreferences.edit().remove(id).apply()
+    override fun delete(id: Int) {
+        sharedPreferences.edit().remove(id.toString()).apply()
         loadData()
     }
 
-    override fun getById(id: String): GeoObject? {
-        val json = sharedPreferences.getString(id, null)
+    override fun getById(id: Int): GeoObject? {
+        val json = sharedPreferences.getString(id.toString(), null)
         return json?.let { gson.fromJson(it, GeoObject::class.java) }
     }
 
