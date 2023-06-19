@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
-import androidx.transition.Fade
 import androidx.transition.TransitionManager
 import com.xabbok.nmediamaps.databinding.ListItemGeoObjectBinding
 import com.xabbok.nmediamaps.dto.GeoObject
@@ -84,7 +83,7 @@ class ObjectListViewAdapter(
 
             is CardViewState.EditMode -> {
                   // если мы находимся в режиме редактирования, то переключаемся в режим чтения
-                TransitionManager.beginDelayedTransition(parentLayout, Fade())
+                TransitionManager.beginDelayedTransition(parentLayout, ChangeBounds())
 
                 holder.binding.apply {
                     holder.binding.cardView.tag =
