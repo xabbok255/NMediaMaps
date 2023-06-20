@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -27,8 +28,10 @@ import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.model.cameraPosition
 import com.google.maps.android.ktx.utils.collection.addMarker
 import com.xabbok.nmediamaps.R
+import com.xabbok.nmediamaps.adapter.MapInfoWindowAdapter
 import com.xabbok.nmediamaps.databinding.FragmentMapsBinding
 import com.xabbok.nmediamaps.dto.GeoObject
+import com.xabbok.nmediamaps.extensions.icon
 import com.xabbok.nmediamaps.presentation.viewmodels.ObjectsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -68,6 +71,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
             }
         }
 
+    @SuppressLint("PotentialBehaviorOverride")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewLifecycleOwner.lifecycleScope.launch {
 
@@ -173,22 +177,24 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                     marker?.let {
                         addMarker {
                             position(it)
+                            icon(AppCompatResources.getDrawable(requireContext(), R.drawable.add_location_icon)!!)
                         }
                     }
                 }
             }
 
-            viewModel.data.observe(viewLifecycleOwner) {marker ->
+            viewModel.data.observe(viewLifecycleOwner) { list ->
                 markerManagerObjectListCollection.apply {
                     clear()
-
-                    marker?.let {
-                        addAll(it.map {
+                    list?.forEach {
+                        addMarker(
                             MarkerOptions().apply {
                                 position(LatLng(it.lat, it.long))
                                 title(it.title)
                             }
-                        })
+                        ).apply {
+                            tag = it
+                        }
                     }
                 }
             }
@@ -220,9 +226,16 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                 true
             }*/
 
+            markerManagerObjectListCollection.setInfoWindowAdapter(
+                MapInfoWindowAdapter(
+                    requireContext()
+                )
+            )
+
             googleMap.setOnMapClickListener {
                 viewModel.lastTouchedPoint.postValue(it)
             }
+
         }
     }
 
