@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -21,6 +20,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.collections.MarkerManager
 import com.google.maps.android.ktx.awaitAnimateCamera
 import com.google.maps.android.ktx.awaitMap
@@ -29,7 +29,6 @@ import com.google.maps.android.ktx.utils.collection.addMarker
 import com.xabbok.nmediamaps.R
 import com.xabbok.nmediamaps.databinding.FragmentMapsBinding
 import com.xabbok.nmediamaps.dto.GeoObject
-import com.xabbok.nmediamaps.extensions.icon
 import com.xabbok.nmediamaps.presentation.viewmodels.ObjectsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -45,6 +44,12 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
     private val markerManagerCurrentSelectedCollection: MarkerManager.Collection by lazy {
         markerManager.newCollection(
             "CurrentSelection"
+        )
+    }
+
+    private val markerManagerObjectListCollection: MarkerManager.Collection by lazy {
+        markerManager.newCollection(
+            "ObjectList"
         )
     }
 
@@ -125,7 +130,23 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                         }
                     }
             }
-            val target = LatLng(55.751999, 37.617734)
+
+            lifecycleScope.launch {
+                viewModel.moveMapPosition.collect() {
+                    it?.let {
+                        lifecycleScope.launch {
+                            googleMap.awaitAnimateCamera(
+                                CameraUpdateFactory.newCameraPosition(
+                                    cameraPosition {
+                                        target(LatLng(it.lat, it.long))
+                                        zoom(15F)
+                                    }
+                                ), 500
+                            )
+                        }
+                    }
+                }
+            }
 
             binding.lastTouchedPointAddButton.setOnClickListener {
                 markerManagerCurrentSelectedCollection.markers.toList().singleOrNull()?.let {
@@ -157,7 +178,22 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                 }
             }
 
-            val collection: MarkerManager.Collection = markerManager.newCollection().apply {
+            viewModel.data.observe(viewLifecycleOwner) {marker ->
+                markerManagerObjectListCollection.apply {
+                    clear()
+
+                    marker?.let {
+                        addAll(it.map {
+                            MarkerOptions().apply {
+                                position(LatLng(it.lat, it.long))
+                                title(it.title)
+                            }
+                        })
+                    }
+                }
+            }
+
+            /*val collection: MarkerManager.Collection = markerManager.newCollection().apply {
                 addMarker {
                     position(target)
 
@@ -182,12 +218,11 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                     Toast.LENGTH_LONG
                 ).show()
                 true
-            }
+            }*/
 
             googleMap.setOnMapClickListener {
                 viewModel.lastTouchedPoint.postValue(it)
             }
-
         }
     }
 

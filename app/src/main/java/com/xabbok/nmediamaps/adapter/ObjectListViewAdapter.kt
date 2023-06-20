@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
@@ -52,6 +53,11 @@ class ObjectListViewAdapter(
             )
         }
         holder.binding.cardView.setOnClickListener { toggleCardViewState(holder, geoObject) }
+
+        holder.binding.gotoLocationButton.setOnClickListener {
+            viewModel.moveCameraToObject(geoObject)
+            fragment.findNavController().popBackStack()
+        }
 
         setupListeners(holder, geoObject)
     }
