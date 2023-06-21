@@ -26,5 +26,16 @@
             android:text="@string/last_touched_point_button_text"
             android:visibility="invisible"
             tools:visibility="visible" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map_info_fragment_container_view"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|fill_horizontal"
+            android:name="com.xabbok.nmediamaps.presentation.fragments.MapInfoFragment"
+            tools:context=".presentation.fragments.MapInfoFragment"
+            tools:layout="@layout/map_info_fragment"
+            tools:visibility="visible"/>
     </FrameLayout>
 </LinearLayout>

@@ -19,6 +19,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -28,7 +29,6 @@ import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.model.cameraPosition
 import com.google.maps.android.ktx.utils.collection.addMarker
 import com.xabbok.nmediamaps.R
-import com.xabbok.nmediamaps.adapter.MapInfoWindowAdapter
 import com.xabbok.nmediamaps.databinding.FragmentMapsBinding
 import com.xabbok.nmediamaps.dto.GeoObject
 import com.xabbok.nmediamaps.extensions.icon
@@ -177,7 +177,12 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                     marker?.let {
                         addMarker {
                             position(it)
-                            icon(AppCompatResources.getDrawable(requireContext(), R.drawable.add_location_icon)!!)
+                            icon(
+                                AppCompatResources.getDrawable(
+                                    requireContext(),
+                                    R.drawable.add_location_icon
+                                )!!
+                            )
                         }
                     }
                 }
@@ -226,14 +231,21 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                 true
             }*/
 
-            markerManagerObjectListCollection.setInfoWindowAdapter(
-                MapInfoWindowAdapter(
-                    requireContext()
-                )
-            )
+            markerManagerObjectListCollection.setOnMarkerClickListener(OnMarkerClickListener {
+                viewModel.lastTouchedPoint.postValue(null)
+                viewModel.currentSelectedObject.postValue(it.tag as GeoObject)
+                return@OnMarkerClickListener true
+            })
+
+            viewModel.currentSelectedObject.observe(viewLifecycleOwner) {
+                binding.mapInfoFragmentContainerView.isVisible = (it != null)
+            }
 
             googleMap.setOnMapClickListener {
-                viewModel.lastTouchedPoint.postValue(it)
+                if (viewModel.currentSelectedObject.value != null) {
+                    viewModel.currentSelectedObject.postValue(null)
+                } else
+                    viewModel.lastTouchedPoint.postValue(it)
             }
 
         }

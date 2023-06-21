@@ -20,6 +20,7 @@ class ObjectsViewModel @Inject constructor(private val repository: ObjectsReposi
     ViewModel() {
     val data: LiveData<List<GeoObject>> = repository.data
     val lastTouchedPoint: MutableLiveData<LatLng> = MutableLiveData()
+    val currentSelectedObject: MutableLiveData<GeoObject> = MutableLiveData<GeoObject>()
     val firstMoveCameraCurrentPosition = SingleLiveEvent<Boolean>()
     private val _moveMapPosition = MutableSharedFlow<GeoObject>()
     val moveMapPosition: SharedFlow<GeoObject>
