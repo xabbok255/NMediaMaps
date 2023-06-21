@@ -59,7 +59,7 @@
                         android:background="@null"
                         android:gravity="top"
                         android:importantForAutofill="no"
-                        android:inputType="textNoSuggestions"
+                        android:inputType="textNoSuggestions|textMultiLine"
                         android:minLines="10"
                         android:scrollbars="vertical"
                         android:text="@={data.description}"
