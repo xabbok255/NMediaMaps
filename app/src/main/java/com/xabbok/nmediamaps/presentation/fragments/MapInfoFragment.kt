@@ -22,6 +22,7 @@ class MapInfoFragment() : Fragment(R.layout.map_info_fragment) {
             it?.let { geoObject ->
                 binding.title.text = geoObject.title
                 binding.description.text = geoObject.description
+                binding.nestedScrollDescription.smoothScrollTo(0, 0)
 
                 binding.editObjectButton.setOnClickListener {
                     findNavController().navigate(
@@ -31,7 +32,5 @@ class MapInfoFragment() : Fragment(R.layout.map_info_fragment) {
                 }
             }
         }
-
-
     }
 }
