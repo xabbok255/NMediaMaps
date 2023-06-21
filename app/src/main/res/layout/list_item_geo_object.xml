@@ -28,27 +28,49 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/title"
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    tools:text="Title" />
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/titleView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:visibility="visible"
+                        tools:text="@tools:sample/lorem[150]" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/titleEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@android:color/transparent"
+                        android:padding="0dp"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:text="@tools:sample/lorem[150]" />
+                </FrameLayout>
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/gotoLocationButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    app:srcCompat="@drawable/goto_location_icon"
-                    android:tint="@android:color/holo_orange_dark"/>
+                    android:tint="@android:color/holo_orange_dark"
+                    app:srcCompat="@drawable/goto_location_icon" />
 
             </LinearLayout>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginVertical="5dp"/>
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nestedScrollDescription"

@@ -1,5 +1,6 @@
 package com.xabbok.nmediamaps.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -20,11 +21,8 @@ sealed class CardViewState() {
 }
 
 class ObjectListViewAdapter(
-    val context: Context,
-    var dataSource: List<GeoObject>,
-    val fragment: Fragment
-) :
-    RecyclerView.Adapter<ObjectListViewAdapter.GeoObjectViewHolder>() {
+    val context: Context, var dataSource: List<GeoObject>, val fragment: Fragment
+) : RecyclerView.Adapter<ObjectListViewAdapter.GeoObjectViewHolder>() {
     private val viewModel: ObjectsViewModel by fragment.activityViewModels()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeoObjectViewHolder {
@@ -34,13 +32,17 @@ class ObjectListViewAdapter(
         return GeoObjectViewHolder(binding)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: GeoObjectViewHolder, position: Int) {
         val geoObject = dataSource[position]
 
-        holder.binding.title.text = geoObject.title
+        holder.binding.titleEdit.setText(geoObject.title)
+        holder.binding.titleView.text = geoObject.title
         holder.binding.descriptionSmall.text = geoObject.description
         holder.binding.descriptionFullEdit.setText(geoObject.description)
 
+        holder.binding.titleEdit.visibility = View.GONE
+        holder.binding.titleView.visibility = View.VISIBLE
         holder.binding.descriptionSmall.visibility = View.VISIBLE
         holder.binding.descriptionFullEdit.visibility = View.GONE
         holder.binding.actionsLayout.visibility = View.GONE
@@ -48,10 +50,14 @@ class ObjectListViewAdapter(
 
         holder.binding.descriptionSmall.setOnClickListener {
             toggleCardViewState(
-                holder,
-                geoObject
+                holder, geoObject
             )
         }
+
+        holder.binding.titleView.setOnClickListener {
+            toggleCardViewState(holder, geoObject)
+        }
+
         holder.binding.cardView.setOnClickListener { toggleCardViewState(holder, geoObject) }
 
         holder.binding.gotoLocationButton.setOnClickListener {
@@ -63,8 +69,7 @@ class ObjectListViewAdapter(
     }
 
     private fun toggleCardViewState(
-        holder: GeoObjectViewHolder,
-        geoObject: GeoObject
+        holder: GeoObjectViewHolder, geoObject: GeoObject
     ) {
         val parentLayout = holder.binding.root as ViewGroup
         val currentState = holder.binding.cardView.tag as CardViewState
@@ -80,7 +85,9 @@ class ObjectListViewAdapter(
                     descriptionSmall.visibility = View.GONE
                     descriptionFullEdit.visibility = View.VISIBLE
                     actionsLayout.visibility = View.VISIBLE
-
+                    holder.binding.titleEdit.visibility = View.VISIBLE
+                    holder.binding.titleEdit.requestFocus()
+                    holder.binding.titleView.visibility = View.GONE
 
                     cardView.tag =
                         CardViewState.EditMode // сохраняем новое состояние в теге CardView
@@ -88,7 +95,7 @@ class ObjectListViewAdapter(
             }
 
             is CardViewState.EditMode -> {
-                  // если мы находимся в режиме редактирования, то переключаемся в режим чтения
+                // если мы находимся в режиме редактирования, то переключаемся в режим чтения
                 TransitionManager.beginDelayedTransition(parentLayout, ChangeBounds())
 
                 holder.binding.apply {
@@ -98,7 +105,10 @@ class ObjectListViewAdapter(
                     descriptionSmall.visibility = View.VISIBLE
                     descriptionFullEdit.visibility = View.GONE
                     actionsLayout.visibility = View.GONE
+                    holder.binding.titleEdit.visibility = View.GONE
+                    holder.binding.titleView.visibility = View.VISIBLE
                     descriptionFullEdit.setText(geoObject.description)
+                    holder.binding.titleEdit.setText(geoObject.title)
                 }
             }
         }
@@ -106,7 +116,12 @@ class ObjectListViewAdapter(
 
     private fun setupListeners(holder: GeoObjectViewHolder, geoObject: GeoObject) {
         holder.binding.save.setOnClickListener {
-            viewModel.save(geoObject.copy(description = holder.binding.descriptionFullEdit.text.toString()))
+            viewModel.save(
+                geoObject.copy(
+                    title = holder.binding.titleEdit.text.toString(),
+                    description = holder.binding.descriptionFullEdit.text.toString()
+                )
+            )
             toggleCardViewState(holder, geoObject)
         }
 
