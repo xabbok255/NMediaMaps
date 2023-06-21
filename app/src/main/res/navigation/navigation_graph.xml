@@ -15,6 +15,10 @@
         android:name="com.xabbok.nmediamaps.presentation.fragments.ObjectsFragment"
         android:label="fragment_objects"
         tools:layout="@layout/fragment_objects" />
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.xabbok.nmediamaps.presentation.fragments.ColorsFragment"
+        android:label="ColorsFragment" />
     <action
         android:id="@+id/action_global_objectsFragmentNav"
         app:destination="@id/objectList"
@@ -28,5 +32,8 @@
         android:id="@+id/objectEditFragment"
         android:name="com.xabbok.nmediamaps.presentation.fragments.ObjectEditFragment"
         android:label="ObjectEditFragment" />
-    <action android:id="@+id/action_global_objectEditFragment" app:destination="@id/objectEditFragment" />
+    <action
+        android:id="@+id/action_global_objectEditFragment"
+        app:destination="@id/objectEditFragment" />
+
 </navigation>
