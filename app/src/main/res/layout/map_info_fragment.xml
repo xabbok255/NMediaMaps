@@ -3,12 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/rounded_corners_background"
-    android:backgroundTint="?attr/colorSurface"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:ignore="UselessParent">
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,11 +37,18 @@
         app:dividerColor="?attr/colorOnSurface"
         app:dividerThickness="1dp" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/description"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="?attr/colorOnSurface"
-        tools:text="@tools:sample/lorem[50]" />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="?attr/colorOnSurface"
+            tools:text="@tools:sample/lorem[350]" />
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
