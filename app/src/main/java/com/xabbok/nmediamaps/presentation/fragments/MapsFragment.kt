@@ -22,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.collections.MarkerManager
 import com.google.maps.android.ktx.awaitAnimateCamera
@@ -33,6 +34,7 @@ import com.xabbok.nmediamaps.databinding.FragmentMapsBinding
 import com.xabbok.nmediamaps.dto.GeoObject
 import com.xabbok.nmediamaps.extensions.icon
 import com.xabbok.nmediamaps.presentation.viewmodels.ObjectsViewModel
+import com.xabbok.nmediamaps.utils.isNightMode
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -112,6 +114,7 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                 uiSettings.apply {
                     isZoomControlsEnabled = true
                     setAllGesturesEnabled(true)
+                    isTrafficEnabled = false
                 }
             }
 
@@ -165,14 +168,17 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                         bundleOf(Pair(INTENT_EXTRA_OBJECT, geoObject))
                     )
                 }
+            }
 
+            binding.lastTouchedPointClearButton.setOnClickListener {
+                viewModel.lastTouchedPoint.postValue(null)
             }
 
             viewModel.lastTouchedPoint.observe(viewLifecycleOwner) { marker ->
                 markerManagerCurrentSelectedCollection.apply {
                     clear()
 
-                    binding.lastTouchedPointAddButton.isVisible = marker != null
+                    binding.lastTouchedPointLayout.isVisible = marker != null
 
                     marker?.let {
                         addMarker {
@@ -248,6 +254,14 @@ class MapsFragment : Fragment(R.layout.fragment_maps) {
                     viewModel.lastTouchedPoint.postValue(it)
             }
 
+            if (isNightMode(requireContext())) {
+                googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                        requireContext(),
+                        R.raw.google_style
+                    )
+                )
+            }
         }
     }
 
