@@ -13,17 +13,40 @@
         android:layout_height="match_parent"
         tools:context=".presentation.fragments.MapsFragment" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/lastTouchedPointAddButton"
+    <LinearLayout
+        android:id="@+id/lastTouchedPointLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:text="@string/last_touched_point_button_text"
+        android:orientation="horizontal"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible" />
+        tools:visibility="visible">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lastTouchedPointAddButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/last_touched_point_button_text"
+            app:iconGravity="textEnd"
+            android:backgroundTint="@android:color/holo_green_dark"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lastTouchedPointClearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:backgroundTint="?attr/colorSurfaceDim"
+            android:minWidth="0dp"
+            app:icon="@drawable/clear_button"
+            app:iconPadding="0dp" />
+    </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map_info_fragment_container_view"
